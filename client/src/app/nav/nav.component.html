@@ -2,7 +2,7 @@
     <div class="container">
         <a class="navbar-brand" href="#">Dating App</a>
 
-        @if(loggedIn){
+        @if(accountService.currentUser()){
         <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
                 <a class="nav-link">Matches</a>
@@ -16,7 +16,7 @@
         </ul>
         }
 
-        @if (loggedIn) {
+        @if (accountService.currentUser()) {
         <div class="dropdown" dropdown>
             <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>Welcome User</a>
             <div class="dropdown-menu" *dropdownMenu>
@@ -27,7 +27,7 @@
         </div>
         }
 
-        @if(!loggedIn){
+        @if(!accountService.currentUser()){
         <form #loginForm="ngForm" class="d-flex" (ngSubmit)="login()">
             <input name="username" [(ngModel)]="model.username" class="form-control me-2" placeholder="Username">
             <input name="password" [(ngModel)]="model.password" class="form-control me-2" placeholder="password"
