@@ -9,11 +9,12 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const toastr = inject(ToastrService);
 
   return next(req).pipe(
-    catchError(error => {
+    catchError((error) => {
       if (error) {
         switch (error.status) {
           case 400:
             if (error.error.errors) {
+              //validation error are called modalStateErrors
               const modalStateErrors = [];
               for (const key in error.error.errors) {
                 if (error.error.errors[key]) {
@@ -22,11 +23,11 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
               }
               throw modalStateErrors.flat();
             } else {
-              toastr.error(error.error);
+              toastr.error(error.error, error.status);
             }
             break;
           case 401:
-            toastr.error('Unauthorised');
+            toastr.error('Unauthorised', error.status);
             break;
           case 404:
             router.navigateByUrl('/not-found');
