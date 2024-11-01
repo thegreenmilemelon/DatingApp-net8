@@ -79,7 +79,7 @@ export class MembersService {
     const response = this.memberCache.get(
       Object.values(this.userParams()).join('-')
     );
-    console.log("response cache", response);
+    //console.log("response cache", response);
     if (response) return setPaginatedResponse(response, this.paginatedResult);
     let params = setPaginationHeaders(
       this.userParams().pageNumber,
