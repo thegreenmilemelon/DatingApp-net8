@@ -15,6 +15,7 @@ namespace API.Controllers;
 [Authorize]
 public class UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService) : BaseApiController
 {
+    //[Authorize(Roles = "Admin")]
     [HttpGet]
     public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers([FromQuery]UserParams userParams)
     {
@@ -26,6 +27,7 @@ public class UsersController(IUserRepository userRepository, IMapper mapper, IPh
     }
 
 
+    //[Authorize(Roles = "Member")]
     [HttpGet("{username}")] // /api/users/2
     public async Task<ActionResult<MemberDto>> GetUser(string username)
     {
