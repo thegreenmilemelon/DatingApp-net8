@@ -22,7 +22,7 @@ public static class IdentityServiceExtensions
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
 {
-    var tokenKey = config["TokenKey"] ?? throw new Exception("Toekkey not found");
+    var tokenKey = config["TokenKey"] ?? throw new Exception("Toeken key not found");
     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
     {
         ValidateIssuer = false,
@@ -30,10 +30,24 @@ public static class IdentityServiceExtensions
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenKey))
     };
+
+    options.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hubs"))
+            {
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        }
+    };
 });
-services.AddAuthorizationBuilder()
-.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"))
-.AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
+        services.AddAuthorizationBuilder()
+        .AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"))
+        .AddPolicy("ModeratePhotoRole", policy => policy.RequireRole("Admin", "Moderator"));
 
         return services;
     }

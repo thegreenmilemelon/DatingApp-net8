@@ -33,3 +33,19 @@
 .animate {
     transition: all 0.3s ease-in-out;
 }
+
+@keyframes fa-glow {
+    from {
+        text-shadow: 0 0 10px rgb(1, 189, 42);
+        opacity: 1;
+    }
+    to {
+        text-shadow: 0 0 20px rgb(1, 189, 42);
+        opacity: 0.4;
+    }
+}
+.is-online {
+    animation: fa-glow 1.5s ease-in-out infinite alternate;
+    color: rgb(1, 189, 42);
+}
+
