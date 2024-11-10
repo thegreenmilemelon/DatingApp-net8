@@ -1,17 +1,16 @@
-import { NgFor } from '@angular/common';
+
 import { HttpClient } from '@angular/common/http';
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { NavComponent } from './nav/nav.component';
 import { AccountService } from './_services/account.service';
 import { FormsModule } from '@angular/forms';
-import { HomeComponent } from './home/home.component';
 import { NgxSpinnerComponent } from 'ngx-spinner';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgFor, NavComponent, FormsModule, HomeComponent, NgxSpinnerComponent],
+  imports: [RouterOutlet, NavComponent, FormsModule, NgxSpinnerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
