@@ -50,6 +50,7 @@ public class Seed
 
             //creating uer in database with a password
             //and at the same time saves to the database
+            user.Photos.First().IsApproved = true;
             user.UserName = user.UserName!.ToLower();
             await userManager.CreateAsync(user, "Pa$$w0rd");
 
